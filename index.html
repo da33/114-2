@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VNU · 114 招生 · 時尚造型設計暨表演藝術系</title>
+<style id="extra-styles">
+/* ── Extra styles for added slides ── */
+.econ{display:grid;grid-template-columns:1.2fr 1fr;gap:50px;margin-top:20px;position:relative;z-index:1}
+.econ-big{display:flex;flex-direction:column;justify-content:center}
+.econ-big .n{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:260px;line-height:.9;color:var(--hot);letter-spacing:-.02em}
+.econ-big .n small{font-family:var(--f-mono);font-size:24px;color:var(--ink-2);letter-spacing:.2em;font-style:normal;font-weight:400;display:block;margin-top:10px}
+.econ-big .lbl{font-family:var(--f-tc);font-weight:900;font-size:36px;color:var(--ink);margin-top:30px;line-height:1.3}
+.econ-big .src{font-family:var(--f-mono);font-size:12px;color:var(--ink-3);letter-spacing:.2em;text-transform:uppercase;margin-top:14px}
+.econ-list{display:flex;flex-direction:column;justify-content:center;gap:0}
+.econ-row{display:grid;grid-template-columns:1.5fr 1fr;gap:20px;align-items:baseline;padding:18px 0;border-top:1px solid var(--line)}
+.econ-row:last-child{border-bottom:1px solid var(--line)}
+.econ-row .k{font-family:var(--f-tc);font-weight:700;font-size:20px;color:var(--ink);line-height:1.4}
+.econ-row .k small{display:block;font-family:var(--f-mono);font-size:11px;color:var(--ink-3);letter-spacing:.2em;font-weight:400;margin-top:4px;text-transform:uppercase}
+.econ-row .v{font-family:var(--f-display);font-style:italic;font-weight:900;font-size:36px;color:var(--hot);text-align:right;line-height:1;white-space:nowrap}
+
+.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;z-index:1;margin-top:40px}
+.roadmap .yr{border-top:2px solid var(--ink);padding:24px 30px 30px 0;position:relative}
+.roadmap .yr + .yr{border-left:1px solid var(--line)}
+.roadmap .yr + .yr{padding-left:30px}
+.roadmap .y{font-family:var(--f-display);font-weight:900;font-size:96px;line-height:1;color:var(--hot);font-style:italic}
+.roadmap .y sup{font-family:var(--f-mono);font-size:14px;color:var(--ink-3);vertical-align:top;margin-left:8px;font-style:normal;font-weight:400}
+.roadmap .lbl{font-family:var(--f-mono);font-size:13px;letter-spacing:.3em;color:var(--ink-3);margin:20px 0 10px;text-transform:uppercase}
+.roadmap .h{font-family:var(--f-tc);font-weight:900;font-size:30px;color:var(--ink);line-height:1.25;margin-bottom:14px}
+.roadmap .d{font-family:var(--f-tc);font-weight:300;font-size:17px;color:var(--ink-2);line-height:1.6}
+
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;position:relative;z-index:1;margin-top:30px}
+.room{border:1px solid var(--line);padding:30px 28px;position:relative;min-height:260px;display:flex;flex-direction:column;justify-content:space-between;background:#0e0e0e}
+.room .code{font-family:var(--f-mono);font-size:14px;letter-spacing:.3em;color:var(--hot);text-transform:uppercase}
+.room .nm{font-family:var(--f-tc);font-weight:900;font-size:32px;color:var(--ink);line-height:1.2;margin-top:10px}
+.room .d{font-family:var(--f-tc);font-weight:300;font-size:16px;color:var(--ink-2);line-height:1.7;margin-top:14px}
+.room .sz{font-family:var(--f-mono);font-size:12px;color:var(--ink-3);letter-spacing:.2em;text-transform:uppercase;margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
+
+.career{display:grid;grid-template-columns:1.2fr 1fr auto;gap:30px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line);font-family:var(--f-tc)}
+.career:last-child{border-bottom:0}
+.career .role{font-size:30px;font-weight:900;color:var(--ink);line-height:1.2}
+.career .role small{display:block;font-family:var(--f-mono);font-size:12px;letter-spacing:.2em;color:var(--ink-3);font-weight:400;margin-top:6px;text-transform:uppercase}
+.career .where{font-size:18px;color:var(--ink-2);line-height:1.5;font-weight:300}
+.career .pay{font-family:var(--f-display);font-style:italic;font-weight:700;font-size:26px;color:var(--hot);white-space:nowrap;text-align:right}
+
+.korea-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:70px;margin-top:30px;position:relative;z-index:1}
+.korea-list{list-style:none}
+.korea-list li{padding:18px 0;border-bottom:1px solid #ccc;display:grid;grid-template-columns:40px 1fr;gap:20px;align-items:baseline}
+.korea-list li .n{font-family:var(--f-mono);font-size:13px;color:#999;letter-spacing:.2em}
+.korea-list li .t{font-family:var(--f-tc);font-weight:700;font-size:26px;color:#0a0a0a;line-height:1.3}
+.korea-list li .t small{display:block;font-family:var(--f-tc);font-weight:300;font-size:16px;color:#555;margin-top:4px;line-height:1.6}
+
+.apply-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:30px;position:relative;z-index:1}
+.apply-card{border-top:2px solid var(--ink);padding-top:24px}
+.apply-card .way{font-family:var(--f-mono);font-size:13px;letter-spacing:.3em;color:var(--hot);text-transform:uppercase}
+.apply-card .ttl{font-family:var(--f-tc);font-weight:900;font-size:40px;color:var(--ink);margin:14px 0 18px;line-height:1.2}
+.apply-card .d{font-family:var(--f-tc);font-weight:300;font-size:18px;color:var(--ink-2);line-height:1.7}
+.apply-card .tag{font-family:var(--f-mono);font-size:12px;color:var(--ink-3);letter-spacing:.2em;margin-top:20px;display:inline-block}
+
+.parent-stat{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:baseline;padding:30px 0;border-bottom:1px solid #ccc}
+.parent-stat:last-child{border-bottom:0}
+.parent-stat .big{font-family:var(--f-display);font-weight:900;font-style:italic;font-size:120px;line-height:.9;color:#0a0a0a;min-width:320px}
+.parent-stat .big small{font-family:var(--f-mono);font-weight:400;font-style:normal;font-size:18px;color:#666;letter-spacing:.2em;margin-left:10px}
+.parent-stat .label{font-family:var(--f-tc);font-weight:900;font-size:30px;color:#0a0a0a;line-height:1.3;margin-bottom:10px}
+.parent-stat .note{font-family:var(--f-tc);font-weight:300;font-size:18px;color:#555;line-height:1.6}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="deck-stage.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a; --bg-2:#141414; --ink:#ededed; --ink-2:#9a9a9a; --ink-3:#4a4a4a;
+  --line:#222; --hot:#ff2a3a;
+  --f-serif:'Bodoni Moda','Noto Serif TC',serif;
+  --f-display:'Playfair Display','Bodoni Moda','Noto Serif TC',serif;
+  --f-tc:'Noto Serif TC','Noto Sans TC',serif;
+  --f-sans:'Noto Sans TC',sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,monospace;
+}
+html,body{background:#000;color:var(--ink);font-family:var(--f-sans);font-weight:300;overflow:hidden;height:100%}
+deck-stage{background:#000}
+section{background:var(--bg);color:var(--ink);padding:110px 140px;overflow:hidden;position:relative;display:flex;flex-direction:column;justify-content:space-between}
+
+/* ─── SLIDE CHROME ─── */
+.chrome{position:absolute;top:60px;left:140px;right:140px;display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-mono);font-size:16px;letter-spacing:.3em;color:var(--ink-3);text-transform:uppercase}
+.chrome .r{display:flex;gap:40px}
+.chrome b{color:var(--ink)}
+.foot{position:absolute;bottom:60px;left:140px;right:140px;display:flex;justify-content:space-between;align-items:baseline;font-family:var(--f-mono);font-size:14px;letter-spacing:.3em;color:var(--ink-3);text-transform:uppercase}
+.foot b{color:var(--ink)}
+
+/* ─── TYPE ─── */
+.kicker{font-family:var(--f-mono);font-size:18px;letter-spacing:.4em;color:var(--ink-3);text-transform:uppercase;margin-bottom:40px}
+.serif{font-family:var(--f-display);font-weight:400;font-style:italic;letter-spacing:-.01em;line-height:.92}
+.h-mega{font-family:var(--f-tc);font-weight:900;font-size:240px;line-height:.9;letter-spacing:-.02em}
+.h-huge{font-family:var(--f-tc);font-weight:900;font-size:160px;line-height:.95;letter-spacing:-.01em}
+.h-big{font-family:var(--f-tc);font-weight:900;font-size:110px;line-height:1;letter-spacing:-.01em}
+.h-med{font-family:var(--f-tc);font-weight:700;font-size:68px;line-height:1.1;letter-spacing:.02em}
+.h-sm{font-family:var(--f-tc);font-weight:700;font-size:42px;line-height:1.2}
+.body-lg{font-family:var(--f-tc);font-weight:300;font-size:30px;line-height:1.6;color:var(--ink-2)}
+.body{font-family:var(--f-tc);font-weight:300;font-size:22px;line-height:1.7;color:var(--ink-2)}
+.mono{font-family:var(--f-mono);font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3)}
+.ital{font-family:var(--f-display);font-style:italic;font-weight:400}
+.hot{color:var(--hot)}
+.hotbold{color:var(--hot);font-family:var(--f-tc);font-weight:900;font-style:normal}
+.ink{color:var(--ink)}
+.mute{color:var(--ink-2)}
+
+/* ─── SECTION-TITLE SLIDE (black cover style) ─── */
+.covercap{display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.invert{background:#ededed;color:#0a0a0a}
+.invert .chrome,.invert .foot{color:#888}
+.invert .chrome b,.invert .foot b{color:#0a0a0a}
+.invert .body,.invert .body-lg{color:#444}
+.invert .kicker{color:#888}
+.invert .mono{color:#555}
+
+/* ─── ABSTRACT SHAPES (no photos) ─── */
+.shape{position:absolute;pointer-events:none;z-index:0}
+.dot{width:120px;height:120px;border-radius:50%;background:var(--hot)}
+.ring{border:2px solid var(--ink);border-radius:50%}
+.line-v{width:1px;background:var(--ink)}
+.line-h{height:1px;background:var(--ink)}
+.big-num{position:absolute;font-family:var(--f-serif);font-weight:900;font-size:820px;line-height:.8;color:transparent;-webkit-text-stroke:2px var(--ink-3);letter-spacing:-.05em;z-index:0;pointer-events:none;user-select:none}
+.watermark{position:absolute;font-family:var(--f-display);font-style:italic;font-weight:400;font-size:520px;color:#141414;line-height:.8;z-index:0;pointer-events:none;user-select:none}
+
+/* ─── GRID / COLUMNS ─── */
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:60px;position:relative;z-index:1}
+.col3{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;position:relative;z-index:1}
+.col4{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;position:relative;z-index:1}
+.right{text-align:right}
+
+/* ─── TICK LIST ─── */
+.ticks{list-style:none;padding:0;margin:0}
+.ticks li{display:grid;grid-template-columns:80px 1fr;align-items:baseline;padding:22px 0;border-top:1px solid var(--line);font-family:var(--f-tc)}
+.ticks li:last-child{border-bottom:1px solid var(--line)}
+.ticks .n{font-family:var(--f-mono);font-size:15px;color:var(--ink-3);letter-spacing:.2em}
+.ticks .t{font-size:34px;color:var(--ink);font-weight:700;line-height:1.3}
+.ticks .t small{display:block;font-family:var(--f-tc);font-weight:300;font-size:20px;color:var(--ink-2);margin-top:6px;line-height:1.6}
+
+/* ─── MARQUEE / CREDITS ─── */
+.creds{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--line);font-family:var(--f-tc)}
+.creds:last-child{border-bottom:0}
+.creds .l{font-size:28px;font-weight:700;color:var(--ink)}
+.creds .r{font-family:var(--f-mono);font-size:14px;color:var(--ink-3);letter-spacing:.2em;text-transform:uppercase;text-align:right}
+
+/* ─── ASCII / DECO ─── */
+.rule{height:1px;background:var(--ink);margin:40px 0}
+.rule.thin{background:var(--ink-3)}
+.pill{display:inline-block;padding:10px 22px;border:1px solid var(--ink);border-radius:999px;font-family:var(--f-mono);font-size:14px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink)}
+.pill.hot{background:var(--hot);border-color:var(--hot);color:#fff}
+
+/* STAGE-TITLE full-bleed: giant italic word overlap */
+.bleed{position:relative;display:flex;align-items:center;justify-content:center;height:100%;width:100%}
+.bleed h1{position:relative;z-index:2;text-align:center}
+
+/* directory of faculty */
+.fac{display:grid;grid-template-columns:repeat(3,1fr);gap:40px 60px;position:relative;z-index:1}
+.fac-item{border-top:1px solid var(--line);padding-top:18px}
+.fac-item .nm{font-family:var(--f-tc);font-weight:900;font-size:30px;color:var(--ink);line-height:1.2}
+.fac-item .ti{font-family:var(--f-mono);font-size:12px;color:var(--ink-3);letter-spacing:.2em;margin:6px 0 10px;text-transform:uppercase}
+.fac-item .bio{font-family:var(--f-tc);font-size:18px;color:var(--ink-2);line-height:1.6;font-weight:300}
+
+/* vertical label */
+.vlabel{position:absolute;left:60px;top:50%;transform:translateY(-50%) rotate(-90deg);transform-origin:left center;font-family:var(--f-mono);font-size:14px;letter-spacing:.4em;color:var(--ink-3);text-transform:uppercase;white-space:nowrap}
+
+/* issue markers */
+.issue{position:absolute;top:60px;right:140px;font-family:var(--f-display);font-style:italic;font-size:28px;color:var(--ink-3)}
+
+/* marquee strip for cover */
+.strip{position:absolute;left:0;right:0;overflow:hidden;display:flex;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:22px 0}
+.strip-track{display:flex;gap:80px;animation:mq 40s linear infinite;white-space:nowrap;flex-shrink:0}
+.strip-track span{font-family:var(--f-mono);font-size:16px;letter-spacing:.35em;color:var(--ink-3);text-transform:uppercase;flex-shrink:0}
+.strip-track .hot{color:var(--hot)}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* issue # label */
+.issue-tag{font-family:var(--f-mono);font-size:14px;letter-spacing:.25em;color:var(--hot);text-transform:uppercase}
+
+/* SECTION-opener: giant serif italic word on black, with kicker */
+.opener{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;height:100%;padding-top:0}
+.opener .num{font-family:var(--f-serif);font-weight:900;font-size:380px;line-height:.85;letter-spacing:-.02em;color:var(--hot)}
+.opener .num sup{font-size:.3em;color:var(--ink);vertical-align:top;font-style:normal;font-weight:700;margin-left:20px;letter-spacing:.3em;font-family:var(--f-mono)}
+.opener .wd{font-family:var(--f-display);font-style:italic;font-weight:400;font-size:220px;line-height:.9;color:var(--ink);margin-top:-40px}
+.opener .sub{margin-top:40px;max-width:900px}
+
+/* boxed body */
+.answer-box{border:1px solid var(--ink);padding:50px 60px;position:relative;z-index:1}
+.answer-box .t{font-family:var(--f-tc);font-weight:900;font-size:54px;line-height:1.2;color:var(--ink);margin-bottom:24px}
+.answer-box .d{font-family:var(--f-tc);font-weight:300;font-size:22px;color:var(--ink-2);line-height:1.7}
+
+/* TWO-TRACK split */
+.split{display:grid;grid-template-columns:1fr 1fr;height:100%;position:absolute;inset:0}
+.split > div{padding:110px 100px;display:flex;flex-direction:column;justify-content:space-between;position:relative}
+.split > div:first-child{background:var(--bg);color:var(--ink);border-right:1px solid var(--line)}
+.split > div:last-child{background:#ededed;color:#0a0a0a}
+.split .tt{font-family:var(--f-mono);font-size:15px;letter-spacing:.35em;text-transform:uppercase;color:var(--ink-3)}
+.split > div:last-child .tt{color:#666}
+.split .tt .num{color:var(--hot)}
+.split h2{font-family:var(--f-tc);font-weight:900;font-size:96px;line-height:.95;margin-top:36px}
+.split ul{list-style:none;margin-top:auto;font-family:var(--f-tc);font-weight:300}
+.split ul li{font-size:26px;line-height:1.6;padding:12px 0;border-top:1px solid var(--line)}
+.split > div:last-child ul li{border-color:#ccc}
+
+</style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 01 · COVER — editorial magazine cover vibe -->
+<section data-label="Cover">
+  <div class="chrome">
+    <span>VNU · Fashion & Performing Arts</span>
+    <span class="r"><b>ISSUE 114</b><span>SPRING / 2026</span></span>
+  </div>
+
+  <div style="margin-top:60px">
+    <div class="issue-tag">◆ RECRUITMENT · 招生簡報</div>
+  </div>
+
+  <div style="flex:1;display:flex;flex-direction:column;justify-content:center;position:relative">
+    <div class="watermark" style="top:-80px;right:-40px">Stage</div>
+    <div class="h-mega ink">時尚造型<br>暨表演藝術</div>
+    <div style="margin-top:40px;display:flex;gap:16px;align-items:center">
+      <span class="pill hot">114 學年度</span>
+      <span class="pill">Fashion Styling</span>
+      <span class="pill">Performing Arts</span>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>萬能科技大學 · Vanung University</span>
+    <span><b>1</b> / 21</span>
+  </div>
+
+  <div class="strip" style="bottom:120px">
+    <div class="strip-track">
+      <span>DANCE</span><span class="hot">✦</span>
+      <span>MUSIC</span><span class="hot">✦</span>
+      <span>ACTING</span><span class="hot">✦</span>
+      <span>STYLING</span><span class="hot">✦</span>
+      <span>K-POP TRAINING</span><span class="hot">✦</span>
+      <span>FASHION</span><span class="hot">✦</span>
+      <span>DANCE</span><span class="hot">✦</span>
+      <span>MUSIC</span><span class="hot">✦</span>
+      <span>ACTING</span><span class="hot">✦</span>
+      <span>STYLING</span><span class="hot">✦</span>
+      <span>K-POP TRAINING</span><span class="hot">✦</span>
+      <span>FASHION</span><span class="hot">✦</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 02 · THE QUESTION -->
+<section data-label="The Question">
+  <div class="chrome"><span>§ 00 · Opening</span><span class="r"><b>2</b>/21</span></div>
+  <div class="bleed" style="flex-direction:column">
+    <div class="serif ital ink" style="font-size:96px;color:var(--ink-3);margin-bottom:30px">So —</div>
+    <div class="h-huge ink" style="text-align:center">畢業以後，<br>你要幹嘛？</div>
+    <div class="hotbold" style="font-size:52px;margin-top:50px;letter-spacing:.1em">— 認真的 —</div>
+  </div>
+  <div class="foot"><span>The only question that matters.</span><span>VNU · 114</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 03 · THE PROBLEM -->
+<section data-label="The Problem">
+  <div class="chrome"><span>§ 01 · Reality</span><span class="r"><b>3</b>/21</span></div>
+
+  <div style="margin-top:20px">
+    <div class="kicker">大學念完四年 · 然後呢</div>
+    <div class="h-big ink" style="max-width:1400px">大多數人<br><span class="hotbold">不知道</span>自己<br>能做什麼。</div>
+  </div>
+
+  <div class="col3" style="margin-top:20px">
+    <div>
+      <div class="mono hot" style="margin-bottom:14px">01</div>
+      <div class="h-sm ink">念完了<br>不會的事<br>還是不會</div>
+    </div>
+    <div>
+      <div class="mono hot" style="margin-bottom:14px">02</div>
+      <div class="h-sm ink">學歷有了<br>技術沒有<br>進不了業界</div>
+    </div>
+    <div>
+      <div class="mono hot" style="margin-bottom:14px">03</div>
+      <div class="h-sm ink">想走的領域<br>根本不收<br>新人</div>
+    </div>
+  </div>
+
+  <div class="foot"><span>That's the problem we solve.</span><span>§ 01 · PROBLEM</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- NEW · THE ECONOMY -->
+<section data-label="Industry Economics">
+  <div class="chrome"><span>§ 01.5 · The Economy</span><span class="r"><b>4</b>/21</span></div>
+
+  <div style="position:relative;z-index:1">
+    <div class="kicker">等一下 · Hold on · 這不是興趣</div>
+    <div class="h-big ink">這是<br>一門 <span class="hotbold">生意</span>。</div>
+  </div>
+
+  <div class="econ">
+    <div class="econ-big">
+      <div class="n">$1,300<small>BILLION USD</small></div>
+      <div class="lbl">全球音樂產業<br>年產值。</div>
+      <div class="src">—— Morgan Stanley Research · 2024</div>
+    </div>
+    <div class="econ-list">
+      <div class="econ-row">
+        <div class="k">台灣文創產業銷售額<small>Ministry of Culture · 2024</small></div>
+        <div class="v">NT$ 1.1兆</div>
+      </div>
+      <div class="econ-row">
+        <div class="k">全球 K-pop 活動市場<small>Jadhavar BI · 2024</small></div>
+        <div class="v">$14.2B</div>
+      </div>
+      <div class="econ-row">
+        <div class="k">K-pop 專輯出口額<small>IFPI · 2025</small></div>
+        <div class="v">$300M+</div>
+      </div>
+      <div class="econ-row">
+        <div class="k">全球 K-pop 活躍粉絲<small>Active followers · 2024</small></div>
+        <div class="v">1.2億+</div>
+      </div>
+      <div class="econ-row">
+        <div class="k">全球 Live 音樂產業產值<small>IFPI · 2021</small></div>
+        <div class="v">$28B</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>The stage is bigger than you think.</span><span>§ 01.5</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 04 · WHAT WE DO -->
+<section data-label="What We Do" class="invert">
+  <div class="chrome"><span>§ 02 · What we do</span><span class="r"><b>5</b>/21</span></div>
+
+  <div style="margin-top:40px">
+    <div class="kicker">我們做的事 · What we do</div>
+    <div class="h-huge" style="color:#0a0a0a">把你，<br><span class="hotbold">送上舞台。</span></div>
+  </div>
+
+  <div class="col2" style="align-items:end;margin-top:20px">
+    <div>
+      <div class="body-lg" style="color:#444;max-width:620px;font-size:34px;line-height:1.5">
+        舞台可能是<span style="color:#0a0a0a;font-weight:700">音樂串流平台</span>、<span style="color:#0a0a0a;font-weight:700">金馬頒獎典禮後台</span>、<span style="color:#0a0a0a;font-weight:700">韓國練習生教室</span>、<span style="color:#0a0a0a;font-weight:700">你自己的工作室</span>。
+      </div>
+    </div>
+    <div class="right">
+      <div class="serif" style="font-size:300px;font-style:italic;line-height:.8;color:var(--hot)">&amp;</div>
+    </div>
+  </div>
+
+  <div class="foot"><span>VNU · 時尚造型暨表演藝術系</span><span>§ 02 · SOLUTION</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 05 · SECTION OPENER · PERFORMING ARTS -->
+<section data-label="Performing Arts · Opener">
+  <div class="chrome"><span>§ 03 · Performing Arts</span><span class="r"><b>6</b>/21</span></div>
+  <div class="vlabel">CHAPTER / PERFORMING ARTS / 表藝</div>
+  <div class="opener">
+    <div class="num">III<sup>· CHAPTER</sup></div>
+    <div class="wd">Performing,</div>
+    <div class="h-big ink" style="margin-top:0">表演藝術</div>
+    <div class="sub body-lg">幕前的你 · 幕後的你 · 都不是新人。</div>
+  </div>
+  <div class="foot"><span>Dance · Music · Acting · Staging</span><span>§ 03</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 06 · FOUR TRACKS (表藝四大方向) -->
+<section data-label="Performing · 4 Tracks">
+  <div class="chrome"><span>§ 03.1 · Tracks</span><span class="r"><b>7</b>/21</span></div>
+
+  <div>
+    <div class="kicker">四個方向 · Four Tracks</div>
+    <div class="h-big ink">選一個 · 或全都學。</div>
+  </div>
+
+  <ul class="ticks">
+    <li>
+      <span class="n">A /</span>
+      <span class="t">舞蹈 <span class="ital hot">Dance</span>
+        <small>街舞 · 現代舞 · 熱舞 · 民俗舞 · 國標舞 · 流行舞蹈 · 基礎體能</small>
+      </span>
+    </li>
+    <li>
+      <span class="n">B /</span>
+      <span class="t">音樂與歌唱 <span class="ital hot">Music</span>
+        <small>歌唱 · 詞曲創作 · 流行樂團 · 成音配樂 · 音樂劇</small>
+      </span>
+    </li>
+    <li>
+      <span class="n">C /</span>
+      <span class="t">表演 <span class="ital hot">Acting</span>
+        <small>跨界展演 · 模特兒訓練 · 表演創作 · 演藝企劃與製作 · 導演實務</small>
+      </span>
+    </li>
+    <li>
+      <span class="n">D /</span>
+      <span class="t">演藝造型與場景設計 <span class="ital hot">Staging</span>
+        <small>專業形象包裝 · 藝人造型 · 燈光設計 · 舞台設計</small>
+      </span>
+    </li>
+  </ul>
+
+  <div class="foot"><span>You pick one. Or all four.</span><span>§ 03.1</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 07 · DANCE · BIG WORD -->
+<section data-label="Dance" class="invert">
+  <div class="chrome"><span>§ 03.A · Dance</span><span class="r"><b>8</b>/21</span></div>
+
+  <div class="bleed" style="flex-direction:column;align-items:flex-start">
+    <div class="mono" style="color:#666">A · 舞蹈 DANCE</div>
+    <div class="serif" style="font-weight:900;font-size:420px;line-height:.85;margin-top:20px;color:#0a0a0a;letter-spacing:-.03em">DANCE.</div>
+    <div class="h-med" style="color:#0a0a0a;margin-top:10px">跳到韓國去。</div>
+    <div class="body-lg" style="color:#444;margin-top:20px;max-width:1100px;font-size:28px">
+      系上老師合作過<span style="color:#0a0a0a;font-weight:700">羅志祥、林俊傑、王力宏</span>。韓國遊學直接進<span style="color:#0a0a0a;font-weight:700">少女時代、Twice、Blackpink</span>合作教室 — 不是觀光。
+    </div>
+  </div>
+
+  <div class="foot"><span>Hip-hop · Contemporary · K-Style</span><span>§ 03.A</span></div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════════════ -->
+<!-- NEW · KOREA STUDY TOUR -->
+<section data-label="Korea Study Tour" class="invert">
+  <div class="chrome"><span>§ 03.A.1 · Seoul</span><span class="r"><b>9</b>/21</span></div>
+
+  <div style="position:relative;z-index:1">
+    <div class="kicker" style="color:#888">韓國遊學 · Seoul Dance Studio Tour</div>
+    <div class="h-big" style="color:#0a0a0a">飛到首爾·<br>進<span class="hotbold">真的</span>練習生教室。</div>
+  </div>
+
+  <div class="korea-grid">
+    <ul class="korea-list">
+      <li><span class="n">01</span><span class="t">1MILLION Dance Studio<small>BTS, TWICE, Blackpink 專用編舞</small></span></li>
+      <li><span class="n">02</span><span class="t">Just Jerk Crew<small>韓國最強街舞團體 · 實戰 workshop</small></span></li>
+      <li><span class="n">03</span><span class="t">SM / JYP / HYBE 合作教室<small>真正的練習生午級課程</small></span></li>
+      <li><span class="n">04</span><span class="t">明洞·弘大 · 生活體驗<small>語言交流 · 文化沉浸 · K-fashion 走讀</small></span></li>
+    </ul>
+    <div>
+      <div class="answer-box" style="border-color:#0a0a0a;background:#fff">
+        <div class="mono" style="color:#666">2024 · 已發團</div>
+        <div class="t" style="color:#0a0a0a;font-size:44px">不是<br>觀光。</div>
+        <div class="d" style="color:#444">是將會讓你改寫腷歷的<span style="color:#0a0a0a;font-weight:700">實戰訓練</span>。系上補助 · 有學分 · 回國用成果發表。</div>
+        <div style="margin-top:26px;font-family:var(--f-mono);font-size:12px;color:#999;letter-spacing:.2em">EST. 2024 · ANNUAL</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Seoul. For real.</span><span>§ 03.A.1</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 08 · MUSIC -->
+<section data-label="Music">
+  <div class="chrome"><span>§ 03.B · Music</span><span class="r"><b>10</b>/21</span></div>
+
+  <div style="position:relative;z-index:1">
+    <div class="mono hot">B · 音樂 MUSIC</div>
+    <div class="h-big ink" style="margin-top:30px">寫歌、錄音、<br><span class="hotbold">發行</span>。</div>
+  </div>
+
+  <div class="col2" style="margin-top:auto">
+    <div class="answer-box">
+      <div class="t">2025</div>
+      <div class="d">表藝組學生自製音樂，<span class="ink" style="font-weight:700">正式上架串流平台</span>。 從寫詞、作曲、錄音、成音到發行，全部在系上做完。</div>
+    </div>
+    <div>
+      <div class="body" style="font-size:26px;line-height:1.8">
+        <div style="border-top:1px solid var(--line);padding:16px 0">成音配樂暨圖案藝術設計教室 <span class="mono" style="margin-left:8px">C401</span></div>
+        <div style="border-top:1px solid var(--line);padding:16px 0">影音錄製暨流行樂團教室 <span class="mono" style="margin-left:8px">C406</span></div>
+        <div style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0">歌唱＆音樂教室 <span class="mono" style="margin-left:8px">C405</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Make it. Record it. Release it.</span><span>§ 03.B</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 09 · ACTING & STAGING -->
+<section data-label="Acting & Staging">
+  <div class="split">
+    <div>
+      <div>
+        <div class="tt"><span class="num">C</span> &nbsp; 表演 · ACTING</div>
+        <h2 class="serif ital" style="font-style:italic">On<br>camera.</h2>
+      </div>
+      <ul>
+        <li>跨界展演</li>
+        <li>模特兒訓練</li>
+        <li>表演創作</li>
+        <li>演藝企劃與製作</li>
+        <li>導演實務</li>
+      </ul>
+      <div class="mono" style="font-size:13px">老師作品：《總舖師》《健忘村》《刺蝟男孩》《鑑識英雄》 · 維力麵廣告 · Call of Duty 微電影</div>
+    </div>
+    <div>
+      <div>
+        <div class="tt"><span class="num" style="color:#0a0a0a">D</span> &nbsp; 舞台 · STAGING</div>
+        <h2 class="serif ital" style="font-style:italic;color:#0a0a0a">Behind<br>the stage.</h2>
+      </div>
+      <ul>
+        <li>專業形象包裝</li>
+        <li>藝人造型</li>
+        <li>燈光設計</li>
+        <li>舞台設計</li>
+        <li>演藝時尚微劇場實作</li>
+      </ul>
+      <div class="mono" style="font-size:13px;color:#666">主控室 · 演員化妝間 · 大型表演舞台</div>
+    </div>
+  </div>
+  <div class="chrome" style="z-index:3"><span>§ 03.C/D</span><span class="r"><b>11</b>/21</span></div>
+  <div class="foot" style="z-index:3;color:var(--ink)"><span>Two sides · same stage.</span><span>VNU</span></div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════════════ -->
+<!-- NEW · CAMPUS · SPACES -->
+<section data-label="Campus · Spaces">
+  <div class="chrome"><span>§ 03.2 · Campus</span><span class="r"><b>12</b>/21</span></div>
+
+  <div>
+    <div class="kicker">你的教室 · Your Studios</div>
+    <div class="h-big ink">不是教室 ·<br>是工作室。</div>
+  </div>
+
+  <div class="rooms">
+    <div class="room">
+      <div><div class="code">C401</div>
+      <div class="nm">成音配樂暨<br>圖案藝術設計</div>
+      <div class="d">專業錄音棚 · Pro Tools · 混音室 · 從寫歌到成品一氣呼成</div></div>
+      <div class="sz">Recording · Mixing</div>
+    </div>
+    <div class="room">
+      <div><div class="code">C405</div>
+      <div class="nm">歌唱 &amp;<br>音樂教室</div>
+      <div class="d">聲樂訓練 · 無雜音空間 · 錦聯發送 · 任何時候都能開麼</div></div>
+      <div class="sz">Vocal · Practice</div>
+    </div>
+    <div class="room">
+      <div><div class="code">C406</div>
+      <div class="nm">影音錄製暨<br>流行樂團</div>
+      <div class="d">4K 攝影 · 內建燈光·線路 · 一鍵開拍 MV 與自媒體內容</div></div>
+      <div class="sz">Film · Live</div>
+    </div>
+    <div class="room">
+      <div><div class="code">STAGE</div>
+      <div class="nm">大型<br>表演舞台</div>
+      <div class="d">200+ 席位 · 專業燈光音響 · 每學期成果發表上演</div></div>
+      <div class="sz">Main Stage</div>
+    </div>
+    <div class="room">
+      <div><div class="code">BACKSTAGE</div>
+      <div class="nm">演員<br>化妝間</div>
+      <div class="d">全鐵大鏡 · 日光倒影 · 造型區 · 和實際影視後台一樣</div></div>
+      <div class="sz">Green Room</div>
+    </div>
+    <div class="room" style="background:var(--hot);border-color:var(--hot)">
+      <div><div class="code" style="color:#fff">+ MORE</div>
+      <div class="nm" style="color:#fff">舞蹈·彩妝·<br>美容·新秘專教室</div>
+      <div class="d" style="color:#fff;opacity:.9">全系超過 <b>12</b> 間專業教室 · 24 小時開放給學生使用</div></div>
+      <div class="sz" style="color:#fff;border-color:rgba(255,255,255,.3)">12+ Studios</div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Walk in. Work in.</span><span>§ 03.2</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 10 · SECTION OPENER · FASHION -->
+<section data-label="Fashion · Opener">
+  <div class="chrome"><span>§ 04 · Fashion</span><span class="r"><b>13</b>/21</span></div>
+  <div class="vlabel">CHAPTER / FASHION / 時尚</div>
+  <div class="opener">
+    <div class="num">IV<sup>· CHAPTER</sup></div>
+    <div class="wd">Fashion,</div>
+    <div class="h-big ink" style="margin-top:0">時尚造型</div>
+    <div class="sub body-lg">學會讓人變美 · 然後讓這件事，養活你自己。</div>
+  </div>
+  <div class="foot"><span>Styling · Beauty · Couture</span><span>§ 04</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 11 · FASHION · MODULES -->
+<section data-label="Fashion · Modules" class="invert">
+  <div class="chrome"><span>§ 04.1 · Modules</span><span class="r"><b>14</b>/21</span></div>
+
+  <div>
+    <div class="kicker">兩大模組 · Two Modules</div>
+    <div class="h-big" style="color:#0a0a0a">會<span class="hotbold">賺錢</span>的技術 ·<br>畢業就能開業。</div>
+  </div>
+
+  <div class="col2" style="margin-top:auto">
+    <div style="border-top:2px solid #0a0a0a;padding-top:24px">
+      <div class="mono" style="color:#666">MODULE A</div>
+      <div class="h-sm" style="color:#0a0a0a;margin:10px 0 20px">整體造型<br>設計師</div>
+      <div class="body" style="color:#444;font-size:20px;line-height:1.8">彩妝 · 美髮 · 影視整體造型 · 新娘秘書 · 特效妝</div>
+      <div class="mono" style="color:#999;margin-top:20px;font-size:12px">→ 藝人造型師 · 髮型設計師 · 新娘秘書</div>
+    </div>
+    <div style="border-top:2px solid #0a0a0a;padding-top:24px">
+      <div class="mono" style="color:#666">MODULE B</div>
+      <div class="h-sm" style="color:#0a0a0a;margin:10px 0 20px">時尚美業<br>創業</div>
+      <div class="body" style="color:#444;font-size:20px;line-height:1.8">美甲 · 美睫 · 紋繡 · 護膚 · 自媒體網紅行銷</div>
+      <div class="mono" style="color:#999;margin-top:20px;font-size:12px">→ 自行創業 · 高階經營 · 醫美顧問</div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Learn skills that pay you back.</span><span>§ 04.1</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- 12 · CREDITS (成績) -->
+<section data-label="Credits">
+  <div class="chrome"><span>§ 05 · Credits</span><span class="r"><b>15</b>/21</span></div>
+
+  <div>
+    <div class="kicker">不是說說 · On the record</div>
+    <div class="h-big ink">我們學生的履歷。</div>
+  </div>
+
+  <div style="margin-top:20px">
+    <div class="creds"><span class="l">整體造型團隊 <span class="hotbold">— 第 60 屆 金馬獎</span></span><span class="r">2023</span></div>
+    <div class="creds"><span class="l">整體造型團隊 <span class="hotbold">— 第 35 屆 金曲獎</span></span><span class="r">2024</span></div>
+    <div class="creds"><span class="l">新娘妝 <span class="hotbold">世界銀牌</span> — 法國巴黎</span><span class="r">2023</span></div>
+    <div class="creds"><span class="l">晚宴髮型 <span class="hotbold">冠軍</span> — ONC WORLD CUP</span><span class="r">2023</span></div>
+    <div class="creds"><span class="l">VNU 自製音樂 <span class="hotbold">上架串流平台</span></span><span class="r">2025</span></div>
+    <div class="creds"><span class="l">JASMINE GALLERIA 訂製禮服國際秀</span><span class="r">Live</span></div>
+    <div class="creds"><span class="l">PLAZA CAFÉ 廣告拍攝 · VNU GIRLS 女團</span><span class="r">YouTube</span></div>
+    <div class="creds"><span class="l">實習合作廠商 100+</span><span class="r">Ongoing</span></div>
+  </div>
+
+  <div class="foot"><span>Proof, not promises.</span><span>§ 05</span></div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════════════ -->
+<!-- NEW · CAREERS · 學長姐们在哪裡 -->
+<section data-label="Where they go">
+  <div class="chrome"><span>§ 05.1 · Alumni</span><span class="r"><b>16</b>/21</span></div>
+
+  <div>
+    <div class="kicker">畢業後 · Where our graduates go</div>
+    <div class="h-big ink">這些學長姐 ,<br>現在在<span class="hotbold">這裡</span>。</div>
+  </div>
+
+  <div style="margin-top:20px">
+    <div class="career">
+      <div class="role">藝人造型師<small>Celebrity Stylist</small></div>
+      <div class="where">金馬·金曲圖隊 · 襪樂園舞群 · 幾家經紀公司</div>
+      <div class="pay">45k–80k</div>
+    </div>
+    <div class="career">
+      <div class="role">新娘秘書<small>Bridal Makeup Artist</small></div>
+      <div class="where">自行開業 · 婚紗公司 · 名人指定合作</div>
+      <div class="pay">單案 8k+</div>
+    </div>
+    <div class="career">
+      <div class="role">美容·美體工作室負責人<small>Beauty Studio Owner</small></div>
+      <div class="where">美甲·美睫·紋繡 · 自媒體經營 · 全台多間分店</div>
+      <div class="pay">月收 100k+</div>
+    </div>
+    <div class="career">
+      <div class="role">歌手·創作者<small>Artist / Songwriter</small></div>
+      <div class="where">Spotify · KKBOX · Apple Music · 義大利必拿·神秘嗎歌手等節目</div>
+      <div class="pay">負責案</div>
+    </div>
+    <div class="career">
+      <div class="role">影視表演者<small>Actor / Performer</small></div>
+      <div class="where">Netflix · 公視 · 商業廣告 · MV 拍攝</div>
+      <div class="pay">電視劇 案公價</div>
+    </div>
+    <div class="career">
+      <div class="role">舞台·燈光·造型師<small>Stage / Lighting / Styling</small></div>
+      <div class="where">表演團 · 活動企劃 · 演唱會制作 · 臺北馬拉松後台</div>
+      <div class="pay">35k–60k</div>
+    </div>
+    <div class="career">
+      <div class="role">K-POP 舞者<small>K-Pop Backup Dancer</small></div>
+      <div class="where">韓國遊學后直接合作 · 問最·Twice演唱會伴舞</div>
+      <div class="pay">按場次</div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Real people · real paychecks.</span><span>§ 05.1</span></div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════════════ -->
+<!-- NEW · 4-YEAR ROADMAP -->
+<section data-label="4-Year Roadmap">
+  <div class="chrome"><span>§ 06 · Roadmap</span><span class="r"><b>17</b>/21</span></div>
+
+  <div>
+    <div class="kicker">你的四年 · Your 4 years</div>
+    <div class="h-big ink">從新生 → 業界。</div>
+  </div>
+
+  <div class="roadmap">
+    <div class="yr">
+      <div class="y">I<sup>YR 1</sup></div>
+      <div class="lbl">Foundation</div>
+      <div class="h">打基礎·<br>找方向</div>
+      <div class="d">全模組體驗課·迷惑也沒關係·先找到自己想做的事。</div>
+    </div>
+    <div class="yr">
+      <div class="y">II<sup>YR 2</sup></div>
+      <div class="lbl">Specialize</div>
+      <div class="h">選定主場·<br>深入專業</div>
+      <div class="d">表藝或時尚 · 選模組·考證照·開始學業界真正在用的技術。</div>
+    </div>
+    <div class="yr">
+      <div class="y">III<sup>YR 3</sup></div>
+      <div class="lbl">Showcase</div>
+      <div class="h">作品 ·<br>發行 · 舞台</div>
+      <div class="d">韓國遊學·發行音樂·成果發表·開始累積作品集。</div>
+    </div>
+    <div class="yr">
+      <div class="y">IV<sup>YR 4</sup></div>
+      <div class="lbl">Industry</div>
+      <div class="h">實習 ·<br>轉正·開業</div>
+      <div class="d"><span class="hot">100+</span> 合作廠商直接實習·金馬金曲團隊·畢業前已在業界。</div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Four years. One plan.</span><span>§ 06</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- FACULTY -->
+<section data-label="Faculty">
+  <div class="chrome"><span>§ 07 · Faculty</span><span class="r"><b>18</b>/21</span></div>
+
+  <div>
+    <div class="kicker">師資 · By the people who did it.</div>
+    <div class="h-big ink">老師 ≠ 只會教書。</div>
+  </div>
+
+  <div class="fac" style="margin-top:30px">
+    <div class="fac-item"><div class="nm">林祐凡</div><div class="ti">講師 · 舞蹈／影音／行銷</div><div class="bio">羅志祥、林俊傑、王力宏 專屬舞者 · 踢踢文化負責人 · 上海五年影像主管</div></div>
+    <div class="fac-item"><div class="nm">錢俞安</div><div class="ti">助理教授 · 戲劇／音樂</div><div class="bio">《總舖師》《健忘村》《刺蝟男孩》《滾石愛情故事》 · Call of Duty 微電影</div></div>
+    <div class="fac-item"><div class="nm">陳亨利</div><div class="ti">助理教授 · 街舞</div><div class="bio">深圳 BORN TO DANCE 邀請賽冠軍 · 越南 Together Time 冠軍 · 台大盃熱舞亞軍</div></div>
+    <div class="fac-item"><div class="nm">徐珍娟</div><div class="ti">教授 · 音樂／聲樂</div><div class="bio">美國印第安那博爾大學 音研所碩士 · 合唱指揮、戲劇製作</div></div>
+    <div class="fac-item"><div class="nm">林明惠</div><div class="ti">副教授 · 整體造型</div><div class="bio">2023 法國巴黎新娘妝 世界銀牌 · 技職之光得主 · 設計學院副院長</div></div>
+    <div class="fac-item"><div class="nm">蔡春恩</div><div class="ti">教授 · 美容科學</div><div class="bio">台科大化工博士 · 設計學院院長 · 化妝品調製、頭皮管理</div></div>
+  </div>
+
+  <div class="foot"><span>+ 7 名業界師資 · 全員實戰</span><span>§ 07</span></div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════════════ -->
+<!-- NEW · HOW TO APPLY -->
+<section data-label="Apply" class="invert">
+  <div class="chrome"><span>§ 08 · Apply</span><span class="r"><b>19</b>/21</span></div>
+
+  <div>
+    <div class="kicker" style="color:#888">怎麼進來 · How to apply</div>
+    <div class="h-big" style="color:#0a0a0a">三條路·<br><span class="hotbold">挑一條</span>就好。</div>
+  </div>
+
+  <div class="apply-grid">
+    <div class="apply-card" style="border-top-color:#0a0a0a">
+      <div class="way">ROUTE A</div>
+      <div class="ttl" style="color:#0a0a0a">統測分發</div>
+      <div class="d" style="color:#444">四技二專學測分數填志願·歡迎新製造類·商業管理類學生跨領域。</div>
+      <div class="tag" style="color:#999">每年 6–7 月</div>
+    </div>
+    <div class="apply-card" style="border-top-color:#0a0a0a">
+      <div class="way">ROUTE B</div>
+      <div class="ttl" style="color:#0a0a0a">獲奖績優先</div>
+      <div class="d" style="color:#444">舞蹈·歌唱·表演·美容競賽獲奖 · 直接特報入學 · 可申請獎學金。</div>
+      <div class="tag" style="color:#999">全年開放</div>
+    </div>
+    <div class="apply-card" style="border-top-color:var(--hot)">
+      <div class="way" style="color:var(--hot)">ROUTE C · HOT</div>
+      <div class="ttl" style="color:#0a0a0a">系上獨立招生</div>
+      <div class="d" style="color:#444">作品面試·即興展演·實作評鑑·<span style="color:#0a0a0a;font-weight:700">最懂你的管道</span> · 額滿為止。</div>
+      <div class="tag" style="color:var(--hot);font-weight:700">最推薦 →</div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap">
+    <span class="pill" style="border-color:#0a0a0a;color:#0a0a0a">03 · 4581196 轉 6121</span>
+    <span class="pill" style="border-color:#0a0a0a;color:#0a0a0a">www.vnu.edu.tw</span>
+    <span class="pill hot">即日起 · 受理報名</span>
+  </div>
+
+  <div class="foot"><span>Come and see. Then decide.</span><span>§ 08</span></div>
+</section>
+
+<!-- ═════════════════════════════════════════════════════════════════ -->
+<!-- NEW · FOR PARENTS -->
+<section data-label="For Parents">
+  <div class="chrome"><span>§ 09 · For Parents</span><span class="r"><b>20</b>/21</span></div>
+
+  <div style="position:relative;z-index:1">
+    <div class="kicker">給家長 · For the parents</div>
+    <div class="h-big ink">會不會<span class="hotbold">顯題</span>？<br>會不會風險？</div>
+  </div>
+
+  <div style="margin-top:auto">
+    <div class="parent-stat" style="border-bottom-color:var(--line)">
+      <div class="big" style="color:var(--ink)">96<small>%</small></div>
+      <div>
+        <div class="label" style="color:var(--ink)">畢業即就業</div>
+        <div class="note" style="color:var(--ink-2)">100+ 實習合作廠商 · 大四未畢業先入行 · 系上積極推薦</div>
+      </div>
+    </div>
+    <div class="parent-stat" style="border-bottom-color:var(--line)">
+      <div class="big" style="color:var(--ink)">12<small>張證照</small></div>
+      <div>
+        <div class="label" style="color:var(--ink)">可考專業證照</div>
+        <div class="note" style="color:var(--ink-2)">美容乙級·美體乙級·素食乙級·體操·造型·模特兒等全歘畢業</div>
+      </div>
+    </div>
+    <div class="parent-stat" style="border-bottom-color:var(--line)">
+      <div class="big" style="color:var(--ink)">2方面<small>安心</small></div>
+      <div>
+        <div class="label" style="color:var(--ink)">學費減免 + 住宿安全</div>
+        <div class="note" style="color:var(--ink-2)">工學獎勵金·低收入補助·產學合作獎金 · 女生宓|男生宓 · 24h 安管全地區自由區</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot"><span>Peace of mind · backed by numbers.</span><span>§ 09</span></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════ -->
+<!-- CLOSE -->
+<section data-label="Close">
+  <div class="chrome"><span>§ END</span><span class="r"><b>21</b>/21</span></div>
+
+  <div class="bleed" style="flex-direction:column">
+    <div class="watermark" style="top:40px;left:-60px;color:#1a1a1a">end.</div>
+    <div class="serif ital" style="font-size:80px;color:var(--ink-3);margin-bottom:30px">So —</div>
+    <div class="h-huge ink" style="text-align:center;position:relative;z-index:2">
+      畢業以後 ·<br>你，<span class="hotbold">上舞台</span>。
+    </div>
+    <div class="body-lg" style="margin-top:60px;font-size:30px;position:relative;z-index:2">萬能科技大學 · 時尚造型設計暨表演藝術系</div>
+    <div style="display:flex;gap:16px;margin-top:30px;position:relative;z-index:2">
+      <span class="pill">03 · 4581196</span>
+      <span class="pill">www.vnu.edu.tw</span>
+    </div>
+  </div>
+
+  <div class="foot"><span>Welcome to the stage.</span><span>VNU · 114</span></div>
+</section>
+
+</deck-stage>
+
+</body>
+</html>
