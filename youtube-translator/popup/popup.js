@@ -5,6 +5,7 @@ const DEFAULTS = {
   enabled: true,
   targetLang: "zh-TW",
   showOriginal: true,
+  hideNative: true,
   fontSize: 24,
   engine: "google",
   geminiApiKey: "",
@@ -14,6 +15,7 @@ const el = {
   enabled: document.getElementById("enabled"),
   targetLang: document.getElementById("targetLang"),
   showOriginal: document.getElementById("showOriginal"),
+  hideNative: document.getElementById("hideNative"),
   fontSize: document.getElementById("fontSize"),
   fontSizeVal: document.getElementById("fontSizeVal"),
   engine: document.getElementById("engine"),
@@ -29,6 +31,7 @@ function render(s) {
   el.enabled.checked = !!s.enabled;
   el.targetLang.value = s.targetLang;
   el.showOriginal.checked = !!s.showOriginal;
+  el.hideNative.checked = !!s.hideNative;
   el.fontSize.value = s.fontSize;
   el.fontSizeVal.textContent = s.fontSize;
   el.engine.value = s.engine;
@@ -46,6 +49,9 @@ el.enabled.addEventListener("change", () => save({ enabled: el.enabled.checked }
 el.targetLang.addEventListener("change", () => save({ targetLang: el.targetLang.value }));
 el.showOriginal.addEventListener("change", () =>
   save({ showOriginal: el.showOriginal.checked })
+);
+el.hideNative.addEventListener("change", () =>
+  save({ hideNative: el.hideNative.checked })
 );
 el.fontSize.addEventListener("input", () => {
   el.fontSizeVal.textContent = el.fontSize.value;

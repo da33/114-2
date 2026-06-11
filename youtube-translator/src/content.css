@@ -1,3 +1,13 @@
+/* Hide YouTube's native caption text when the extension is showing its own
+   overlay. We keep the elements in the DOM (visibility/opacity, not display)
+   so the content script can still read the caption text to translate it. */
+html.yt-rt-hide-native .ytp-caption-window-container,
+html.yt-rt-hide-native .caption-window {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
 /* Translation overlay anchored to the bottom of the YouTube player. */
 .yt-rt-translator-overlay {
   position: absolute;

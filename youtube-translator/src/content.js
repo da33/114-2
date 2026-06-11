@@ -11,6 +11,7 @@
     showOriginal: true,
     fontSize: 24,
     debounceMs: 350,
+    hideNative: true,        // hide YouTube's own captions to avoid overlap
     engine: "google",        // "google" (free, no key) or "gemini" (free AI)
     geminiApiKey: "",
     geminiModel: "gemini-2.0-flash",
@@ -39,10 +40,18 @@
         settings[k] = changes[k].newValue;
       }
       applyOverlayStyle();
+      applyHideNative();
       if (!settings.enabled) clearOverlay();
     });
   } catch (_e) {
     /* storage may be unavailable in some frames */
+  }
+
+  // Hide YouTube's own caption text (we still read it from the DOM) so it does
+  // not overlap with our translation overlay. Toggled by a class on <html>.
+  function applyHideNative() {
+    const on = settings.enabled && settings.hideNative;
+    document.documentElement.classList.toggle("yt-rt-hide-native", on);
   }
 
   // ---- Overlay ------------------------------------------------------------
@@ -184,6 +193,7 @@
   // ---- Boot ---------------------------------------------------------------
   async function init() {
     await loadSettings();
+    applyHideNative();
     watchCaptions();
     // YouTube is a SPA; re-check the overlay when navigating between videos.
     window.addEventListener("yt-navigate-finish", () => {
