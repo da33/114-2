@@ -10,8 +10,6 @@
     targetLang: "zh-TW",
     showOriginal: true,
     fontSize: 24,
-    debounceMs: 180,         // wait after the caption stops changing
-    maxWaitMs: 550,          // but never wait longer than this before translating
     hideNative: true,        // hide YouTube's own captions to avoid overlap
     engine: "google",        // "google" (free, no key) or "gemini" (free AI)
     geminiApiKey: "",
@@ -160,7 +158,6 @@
       // Captions cleared between lines — hide the overlay.
       if (overlay) overlay.style.opacity = "0";
       lastSentText = "";
-      pendingSince = 0;
       clearTimeout(debounceTimer);
       return;
     }
@@ -179,19 +176,26 @@
     scheduleTranslation(text);
   }
 
-  // Debounce so we don't translate every keystroke of a growing auto-caption,
-  // but cap the total wait so a continuously-changing line still gets
-  // translated promptly instead of waiting for the speaker to pause.
-  let pendingSince = 0;
+  // Real-time leading-edge throttle: translate immediately when a caption
+  // first changes, then at most once per interval while it keeps growing,
+  // plus a trailing call to catch the final text. This tracks the caption
+  // live instead of waiting for the speaker to pause.
+  // The fast free Google endpoint can be hit aggressively; the AI engine is
+  // rate-limited and slower, so it uses a longer interval.
+  let lastReqAt = 0;
   function scheduleTranslation(text) {
-    if (!pendingSince) pendingSince = Date.now();
-    const waited = Date.now() - pendingSince;
-    const delay = Math.max(0, Math.min(settings.debounceMs, settings.maxWaitMs - waited));
+    const interval = settings.engine === "gemini" ? 700 : 130;
+    const since = Date.now() - lastReqAt;
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-      pendingSince = 0;
+    if (since >= interval) {
+      lastReqAt = Date.now();
       requestTranslation(text);
-    }, delay);
+    } else {
+      debounceTimer = setTimeout(() => {
+        lastReqAt = Date.now();
+        requestTranslation(text);
+      }, interval - since);
+    }
   }
 
   // ---- Observe the caption container --------------------------------------
