@@ -3,6 +3,7 @@
 // ytInitialPlayerResponse and posts it back via window.postMessage.
 (() => {
   "use strict";
+  console.log("%c[YT-RT]", "color:#e23b3b;font-weight:bold", "inject.js (MAIN world) loaded");
 
   function readTracks() {
     try {

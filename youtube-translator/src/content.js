@@ -5,6 +5,13 @@
 (() => {
   "use strict";
 
+  const VERSION = "2.1-prefetch";
+  function LOG() {
+    const a = Array.prototype.slice.call(arguments);
+    console.log.apply(console, ["%c[YT-RT]", "color:#e23b3b;font-weight:bold", ...a]);
+  }
+  LOG("content script loaded, version", VERSION);
+
   const DEFAULTS = {
     enabled: true,
     targetLang: "zh-TW",
@@ -116,7 +123,10 @@
     if (!ov) return;
     origLine.textContent = settings.showOriginal ? originalText : "";
     transLine.textContent = translatedText || "";
-    ov.style.opacity = translatedText ? "1" : "0";
+    // Show the overlay if we have a translation, or at least the original
+    // (so prefetch mode isn't blank while the batch translation is still running).
+    const hasContent = translatedText || (settings.showOriginal && originalText);
+    ov.style.opacity = hasContent ? "1" : "0";
     applyOverlayStyle();
   }
 
@@ -373,6 +383,7 @@
         for (let i = 0; i < timeline.length; i++) {
           if (resp.translations[i]) timeline[i].translated = resp.translations[i];
         }
+        LOG("prefetch: batch translation done,", resp.translations.length, "lines filled");
         lastSegIdx = -1;
         onTimeUpdate();                            // refresh the current line
       }
@@ -382,28 +393,58 @@
   async function setupForCurrentVideo() {
     const myToken = ++setupToken;
     teardownTimeline();
-    if (!settings.enabled) return;
-    if (location.pathname !== "/watch") return;   // only real watch pages
+    if (!settings.enabled) {
+      LOG("prefetch skipped: extension disabled");
+      return;
+    }
+    if (location.pathname !== "/watch") {
+      LOG("prefetch skipped: not a /watch page (", location.pathname, ") -> live mode");
+      return;
+    }
 
     try {
+      LOG("prefetch: requesting caption tracks...");
       const info = await requestTracks();
       if (myToken !== setupToken) return;
-      if (!info || info.isLive || !info.tracks || !info.tracks.length) return; // -> live mode
+      LOG("prefetch: tracks response =", info);
+      if (!info) {
+        LOG("prefetch FAILED: no player response (inject.js not running?) -> live mode");
+        return;
+      }
+      if (info.isLive) {
+        LOG("prefetch skipped: live stream -> live mode");
+        return;
+      }
+      if (!info.tracks || !info.tracks.length) {
+        LOG("prefetch FAILED: video has no caption tracks -> live mode");
+        return;
+      }
       const track = pickTrack(info.tracks, settings.targetLang);
-      if (!track || !track.baseUrl) return;
+      LOG("prefetch: chosen source track =", track && track.languageCode, track && track.kind);
+      if (!track || !track.baseUrl) {
+        LOG("prefetch FAILED: no usable track baseUrl -> live mode");
+        return;
+      }
 
+      LOG("prefetch: fetching transcript...");
       const segs = await fetchTranscript(track.baseUrl);
       if (myToken !== setupToken) return;
-      if (!segs.length) return;                   // -> live mode
+      LOG("prefetch: transcript has", segs.length, "lines");
+      if (!segs.length) {
+        LOG("prefetch FAILED: transcript empty -> live mode");
+        return;
+      }
 
       timeline = segs;
       timelineActive = true;
       lastSegIdx = -1;
       attachTimeUpdate();
       onTimeUpdate();                             // show original immediately
+      LOG("prefetch ACTIVE ✓ — zero-latency mode, translating", segs.length, "lines via", settings.engine);
       translateTimeline(myToken);                 // fill translations async
-    } catch (_e) {
+    } catch (e) {
       // Any failure: leave timelineActive false so the live observer takes over.
+      LOG("prefetch ERROR -> live mode:", e && e.message ? e.message : e);
       teardownTimeline();
     }
   }
