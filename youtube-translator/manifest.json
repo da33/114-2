@@ -19,6 +19,16 @@
         "https://www.youtube.com/*",
         "https://m.youtube.com/*"
       ],
+      "js": ["src/inject.js"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://m.youtube.com/*"
+      ],
       "js": ["src/content.js"],
       "css": ["src/content.css"],
       "run_at": "document_idle",

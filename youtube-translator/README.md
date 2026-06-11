@@ -6,6 +6,9 @@
 
 ## 功能
 
+- **預先翻譯（零延遲）**：打開一般影片時，直接抓整份字幕檔、整批翻好，照時間碼顯示，
+  播放幾乎沒有延遲，**不需手動開 CC**
+- **即時模式（後備）**：直播或抓不到字幕檔時，自動退回「看一句翻一句」的即時翻譯
 - 即時監看 YouTube 原生字幕，翻成你設定的語言（預設繁體中文 `zh-TW`）
 - **兩種翻譯引擎可切換（都免費）**：
   - **Google**：免設定、即裝即用、速度快（預設）
@@ -27,10 +30,12 @@
 ## 使用方式
 
 1. 打開任一支 YouTube 影片
-2. **在播放器右下角開啟「字幕 (CC)」**（這一步很重要，插件是翻譯 YouTube 的字幕）
-   - 如果原影片沒有字幕，可在「設定（齒輪）→ 字幕 → 自動翻譯／自動產生」先開字幕
-3. 字幕出現後，畫面下方就會顯示繁體中文翻譯
+2. 一般影片會自動進入**預先翻譯模式**：抓整份字幕、整批翻好，畫面下方即時顯示繁中翻譯
+   （**不必手動開 CC**；只要該影片本身有字幕或自動字幕即可）
+3. 直播或抓不到字幕檔的影片會自動退回**即時模式**——此時請在播放器右下角開啟「字幕 (CC)」
 4. 點工具列的插件圖示可調整：翻譯引擎、目標語言、是否顯示原文、字級
+
+> 兩種模式會自動切換，你不用手動選。一般影片＝零延遲；直播＝即時翻譯（會有 YouTube 字幕本身的延遲）。
 
 ### 升級成 Gemini AI 翻譯（免費，品質更好）
 
@@ -46,19 +51,24 @@
 ## 運作原理
 
 ```
-YouTube 字幕 DOM (.ytp-caption-segment)
-        │  MutationObserver 監看文字變化
+預先翻譯模式（一般影片）
+  inject.js (MAIN world) 讀取 ytInitialPlayerResponse 的字幕軌清單
+        │  postMessage
         ▼
-content.js  ──sendMessage──▶  background.js
-        ▲                         │ 依設定呼叫 Gemini 或 Google（含快取）
-        │                         │ Gemini 失敗 → 自動退回 Google
-        └────── 譯文回傳 ─────────┘
+  content.js 抓整份字幕檔(timedtext json3) → 建立時間軸
+        │  translateBatch
         ▼
-畫面下方覆蓋層顯示「原文 / 譯文」
+  background.js 整批翻譯(Google 併發 / Gemini 分批編號)，含快取
+        ▼
+  影片 timeupdate → 依時間碼顯示對應「原文 / 譯文」(零延遲)
+
+即時模式（直播 / 抓不到字幕時自動後備）
+  MutationObserver 監看 .ytp-caption-segment → 逐句即時翻譯
 ```
 
-- `src/content.js`：注入到 YouTube 頁面，監看字幕、顯示翻譯覆蓋層
-- `src/background.js`：service worker，呼叫翻譯 API 並做記憶體快取
+- `src/inject.js`：跑在頁面 MAIN world，讀取 YouTube 的字幕軌資料回傳給 content
+- `src/content.js`：主控；預先翻譯時間軸顯示，失敗時退回即時監看
+- `src/background.js`：service worker，單句與整批翻譯、多引擎與快取
 - `popup/`：工具列的設定面板
 - 翻譯請求集中在 background 處理，避開網頁的 CORS 限制
 

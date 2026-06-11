@@ -40,7 +40,22 @@
       }
       applyOverlayStyle();
       applyHideNative();
-      if (!settings.enabled) clearOverlay();
+      if (!settings.enabled) {
+        teardownTimeline();
+        clearOverlay();
+        return;
+      }
+      // Changing what/how we translate means the prefetched transcript must be
+      // re-fetched and re-translated.
+      if (
+        changes.targetLang ||
+        changes.engine ||
+        changes.geminiApiKey ||
+        changes.geminiModel ||
+        changes.enabled
+      ) {
+        setupForCurrentVideo();
+      }
     });
   } catch (_e) {
     /* storage may be unavailable in some frames */
@@ -152,6 +167,7 @@
 
   function onCaptionChanged() {
     if (!settings.enabled) return;
+    if (timelineActive) return; // prefetched transcript drives the display
     const text = readCaptionText();
 
     if (!text) {
@@ -211,17 +227,201 @@
     });
   }
 
+  // ========================================================================
+  // Prefetch mode: download the whole caption track for the current (non-live)
+  // video up front, translate it in one batch, then display lines by their
+  // timestamp. This makes playback essentially zero-latency. Falls back to the
+  // live observer mode above if the transcript can't be fetched, or for live
+  // streams which have no complete transcript.
+  // ========================================================================
+  let timeline = [];           // [{ start, end, text, translated }]
+  let timelineActive = false;
+  let videoEl = null;
+  let lastSegIdx = -1;
+  let setupToken = 0;          // invalidates stale async setups on navigation
+
+  // Ask the MAIN-world inject script for the caption track list.
+  function requestTracks(timeoutMs = 3000) {
+    return new Promise((resolve) => {
+      const reqId = Math.random().toString(36).slice(2);
+      let done = false;
+      function onMsg(ev) {
+        if (ev.source !== window || !ev.data || ev.data.__ytrt !== "tracks") return;
+        if (ev.data.reqId && ev.data.reqId !== reqId) return;
+        finish(ev.data.payload);
+      }
+      function finish(val) {
+        if (done) return;
+        done = true;
+        window.removeEventListener("message", onMsg);
+        resolve(val);
+      }
+      window.addEventListener("message", onMsg);
+      window.postMessage({ __ytrt: "req-tracks", reqId }, "*");
+      setTimeout(() => finish(null), timeoutMs);
+    });
+  }
+
+  // Choose the source track to translate FROM: prefer a real (manual) track in
+  // a language other than the target; otherwise fall back to auto-captions.
+  function pickTrack(tracks, target) {
+    if (!tracks || !tracks.length) return null;
+    const base = (c) => (c || "").toLowerCase().split("-")[0];
+    const tgt = base(target);
+    const others = tracks.filter((t) => base(t.languageCode) !== tgt);
+    const pool = others.length ? others : tracks;
+    return pool.find((t) => t.kind !== "asr") || pool[0];
+  }
+
+  async function fetchTranscript(baseUrl) {
+    const url = baseUrl + (baseUrl.indexOf("fmt=") >= 0 ? "" : "&fmt=json3");
+    const res = await fetch(url, { credentials: "include" });
+    if (!res.ok) throw new Error("transcript http " + res.status);
+    const data = await res.json();
+    const segs = [];
+    if (data && Array.isArray(data.events)) {
+      for (const ev of data.events) {
+        if (!ev.segs) continue;
+        const text = ev.segs
+          .map((s) => s.utf8 || "")
+          .join("")
+          .replace(/\s+/g, " ")
+          .trim();
+        if (!text) continue;
+        const start = (ev.tStartMs || 0) / 1000;
+        const dur = (ev.dDurationMs || 0) / 1000;
+        segs.push({ start, end: start + dur, text, translated: "" });
+      }
+    }
+    return segs;
+  }
+
+  function getVideoEl() {
+    return (
+      document.querySelector("video.html5-main-video") ||
+      document.querySelector("#movie_player video") ||
+      document.querySelector("video")
+    );
+  }
+
+  function findSegIdx(t) {
+    if (!timeline.length) return -1;
+    let lo = 0, hi = timeline.length - 1, ans = -1;
+    while (lo <= hi) {
+      const mid = (lo + hi) >> 1;
+      if (timeline[mid].start <= t) {
+        ans = mid;
+        lo = mid + 1;
+      } else {
+        hi = mid - 1;
+      }
+    }
+    if (ans < 0) return -1;
+    // Keep a small grace window past the line's end to avoid flicker in gaps.
+    if (t <= timeline[ans].end + 0.5) return ans;
+    return -1;
+  }
+
+  function onTimeUpdate() {
+    if (!timelineActive) return;
+    const v = videoEl;
+    if (!v) return;
+    const idx = findSegIdx(v.currentTime);
+    if (idx === lastSegIdx) return;
+    lastSegIdx = idx;
+    if (idx < 0) {
+      if (overlay) overlay.style.opacity = "0";
+      return;
+    }
+    const seg = timeline[idx];
+    renderTranslation(seg.text, seg.translated);
+  }
+
+  function attachTimeUpdate() {
+    videoEl = getVideoEl();
+    if (!videoEl) {
+      setTimeout(attachTimeUpdate, 500);
+      return;
+    }
+    videoEl.removeEventListener("timeupdate", onTimeUpdate);
+    videoEl.addEventListener("timeupdate", onTimeUpdate);
+  }
+
+  function teardownTimeline() {
+    timelineActive = false;
+    timeline = [];
+    lastSegIdx = -1;
+    if (videoEl) videoEl.removeEventListener("timeupdate", onTimeUpdate);
+    clearOverlay();
+  }
+
+  function translateTimeline(myToken) {
+    const texts = timeline.map((s) => s.text);
+    chrome.runtime.sendMessage(
+      {
+        type: "translateBatch",
+        texts,
+        targetLang: settings.targetLang,
+        engine: settings.engine,
+        geminiApiKey: settings.geminiApiKey,
+        geminiModel: settings.geminiModel,
+      },
+      (resp) => {
+        if (chrome.runtime.lastError) return;
+        if (myToken !== setupToken) return;       // navigated away
+        if (!resp || !resp.ok || !Array.isArray(resp.translations)) return;
+        for (let i = 0; i < timeline.length; i++) {
+          if (resp.translations[i]) timeline[i].translated = resp.translations[i];
+        }
+        lastSegIdx = -1;
+        onTimeUpdate();                            // refresh the current line
+      }
+    );
+  }
+
+  async function setupForCurrentVideo() {
+    const myToken = ++setupToken;
+    teardownTimeline();
+    if (!settings.enabled) return;
+    if (location.pathname !== "/watch") return;   // only real watch pages
+
+    try {
+      const info = await requestTracks();
+      if (myToken !== setupToken) return;
+      if (!info || info.isLive || !info.tracks || !info.tracks.length) return; // -> live mode
+      const track = pickTrack(info.tracks, settings.targetLang);
+      if (!track || !track.baseUrl) return;
+
+      const segs = await fetchTranscript(track.baseUrl);
+      if (myToken !== setupToken) return;
+      if (!segs.length) return;                   // -> live mode
+
+      timeline = segs;
+      timelineActive = true;
+      lastSegIdx = -1;
+      attachTimeUpdate();
+      onTimeUpdate();                             // show original immediately
+      translateTimeline(myToken);                 // fill translations async
+    } catch (_e) {
+      // Any failure: leave timelineActive false so the live observer takes over.
+      teardownTimeline();
+    }
+  }
+
   // ---- Boot ---------------------------------------------------------------
   async function init() {
     await loadSettings();
     applyHideNative();
     watchCaptions();
-    // YouTube is a SPA; re-check the overlay when navigating between videos.
+    setupForCurrentVideo();
+    // YouTube is a SPA; re-run setup when navigating between videos.
     window.addEventListener("yt-navigate-finish", () => {
       lastSentText = "";
       lastRenderedOriginal = "";
       contextLines.length = 0;
       clearOverlay();
+      // ytInitialPlayerResponse updates slightly after this event fires.
+      setTimeout(setupForCurrentVideo, 300);
     });
   }
 
