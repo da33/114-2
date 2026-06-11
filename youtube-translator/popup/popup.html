@@ -18,6 +18,25 @@
   </div>
 
   <div class="row">
+    <label for="engine">翻譯引擎</label>
+    <select id="engine">
+      <option value="google">Google（免費・免設定）</option>
+      <option value="gemini">Gemini AI（免費・品質最好）</option>
+    </select>
+  </div>
+
+  <div id="geminiBox" class="gemini-box" hidden>
+    <label for="geminiApiKey">Gemini API Key</label>
+    <input type="password" id="geminiApiKey" placeholder="貼上你的免費 API key" />
+    <p class="gemini-hint">
+      免費申請（不綁信用卡）：到
+      <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">aistudio.google.com/apikey</a>
+      → 「Create API key」→ 複製貼上。<br />
+      用量超過免費上限時會自動退回 Google，字幕不會中斷。
+    </p>
+  </div>
+
+  <div class="row">
     <label for="targetLang">翻譯成</label>
     <select id="targetLang">
       <option value="zh-TW">繁體中文</option>

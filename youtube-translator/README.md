@@ -7,6 +7,9 @@
 ## 功能
 
 - 即時監看 YouTube 原生字幕，翻成你設定的語言（預設繁體中文 `zh-TW`）
+- **兩種翻譯引擎可切換（都免費）**：
+  - **Google**：免設定、即裝即用、速度快（預設）
+  - **Gemini AI**：翻得更自然、懂前後文與語氣，需貼上免費 API key；超量時自動退回 Google
 - 可選擇**同時顯示原文 + 譯文**，方便對照學語言
 - 可調整字級
 - 翻譯結果會快取，重複的字幕不會重複翻、反應更快
@@ -27,7 +30,18 @@
 2. **在播放器右下角開啟「字幕 (CC)」**（這一步很重要，插件是翻譯 YouTube 的字幕）
    - 如果原影片沒有字幕，可在「設定（齒輪）→ 字幕 → 自動翻譯／自動產生」先開字幕
 3. 字幕出現後，畫面下方就會顯示繁體中文翻譯
-4. 點工具列的插件圖示可調整：開關、目標語言、是否顯示原文、字級
+4. 點工具列的插件圖示可調整：翻譯引擎、目標語言、是否顯示原文、字級
+
+### 升級成 Gemini AI 翻譯（免費，品質更好）
+
+1. 到 [aistudio.google.com/apikey](https://aistudio.google.com/apikey) 用 Google 帳號登入
+2. 按「Create API key」，複製產生的 key（**免費、不需綁信用卡**）
+3. 點插件圖示 → 「翻譯引擎」選 **Gemini AI** → 把 key 貼進欄位
+4. 之後字幕就會用 Gemini 翻譯，更自然、更懂前後文
+
+> Gemini 免費方案有每分鐘/每天用量上限。本插件會傳最近幾行字幕當作前後文以提升品質，
+> 並對重複字幕做快取以節省額度；萬一超量或出錯，會**自動退回 Google**，字幕不會中斷。
+> API key 只存在你的瀏覽器本機（`chrome.storage.sync`），不會傳給第三方。
 
 ## 運作原理
 
@@ -36,7 +50,8 @@ YouTube 字幕 DOM (.ytp-caption-segment)
         │  MutationObserver 監看文字變化
         ▼
 content.js  ──sendMessage──▶  background.js
-        ▲                         │ 呼叫 translate.googleapis.com（含快取）
+        ▲                         │ 依設定呼叫 Gemini 或 Google（含快取）
+        │                         │ Gemini 失敗 → 自動退回 Google
         └────── 譯文回傳 ─────────┘
         ▼
 畫面下方覆蓋層顯示「原文 / 譯文」
@@ -49,8 +64,8 @@ content.js  ──sendMessage──▶  background.js
 
 ## 隱私
 
-- 只有「目前顯示的字幕文字」會被送到 Google 翻譯端點以取得譯文
-- 設定值存在瀏覽器本機（`chrome.storage.sync`），不會上傳到第三方伺服器
+- 只有「目前顯示的字幕文字」（Gemini 模式下含最近幾行作為前後文）會被送到所選的翻譯服務以取得譯文
+- 設定值與 API key 都存在瀏覽器本機（`chrome.storage.sync`），不會上傳到第三方伺服器
 - 插件只在 `*.youtube.com` 上執行
 
 ## 已知限制與後續可擴充

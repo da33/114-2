@@ -7,7 +7,8 @@
   "host_permissions": [
     "https://translate.googleapis.com/*",
     "https://lingva.ml/*",
-    "https://translate.plausibility.cloud/*"
+    "https://translate.plausibility.cloud/*",
+    "https://generativelanguage.googleapis.com/*"
   ],
   "background": {
     "service_worker": "src/background.js"

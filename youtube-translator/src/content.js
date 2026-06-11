@@ -11,6 +11,9 @@
     showOriginal: true,
     fontSize: 24,
     debounceMs: 350,
+    engine: "google",        // "google" (free, no key) or "gemini" (free AI)
+    geminiApiKey: "",
+    geminiModel: "gemini-2.0-flash",
   };
 
   let settings = { ...DEFAULTS };
@@ -111,17 +114,30 @@
   let lastSentText = "";
   let lastRenderedOriginal = "";
   let reqSeq = 0;
+  const contextLines = [];        // recent source lines, used by the AI engine
+  const MAX_CONTEXT = 3;
 
   function requestTranslation(text) {
     const mySeq = ++reqSeq;
     chrome.runtime.sendMessage(
-      { type: "translate", text, targetLang: settings.targetLang },
+      {
+        type: "translate",
+        text,
+        targetLang: settings.targetLang,
+        engine: settings.engine,
+        geminiApiKey: settings.geminiApiKey,
+        geminiModel: settings.geminiModel,
+        context: contextLines.slice(),
+      },
       (resp) => {
         if (chrome.runtime.lastError) return;       // worker asleep / context gone
         if (mySeq !== reqSeq) return;               // a newer line superseded this one
         if (!resp || !resp.ok) return;
         lastRenderedOriginal = text;
         renderTranslation(text, resp.translated);
+        // Keep this line as context for the next translation request.
+        contextLines.push(text);
+        if (contextLines.length > MAX_CONTEXT) contextLines.shift();
       }
     );
   }
@@ -173,6 +189,7 @@
     window.addEventListener("yt-navigate-finish", () => {
       lastSentText = "";
       lastRenderedOriginal = "";
+      contextLines.length = 0;
       clearOverlay();
     });
   }
