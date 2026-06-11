@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YouTube 即時翻譯字幕</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <header class="hd">
+    <span class="dot"></span>
+    <h1>YouTube 即時翻譯字幕</h1>
+  </header>
+
+  <div class="row">
+    <label for="enabled">啟用即時翻譯</label>
+    <input type="checkbox" id="enabled" />
+  </div>
+
+  <div class="row">
+    <label for="targetLang">翻譯成</label>
+    <select id="targetLang">
+      <option value="zh-TW">繁體中文</option>
+      <option value="zh-CN">简体中文</option>
+      <option value="en">English</option>
+      <option value="ja">日本語</option>
+      <option value="ko">한국어</option>
+      <option value="es">Español</option>
+      <option value="fr">Français</option>
+      <option value="de">Deutsch</option>
+      <option value="vi">Tiếng Việt</option>
+      <option value="th">ไทย</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label for="showOriginal">同時顯示原文</label>
+    <input type="checkbox" id="showOriginal" />
+  </div>
+
+  <div class="row col">
+    <label for="fontSize">字級：<span id="fontSizeVal"></span>px</label>
+    <input type="range" id="fontSize" min="14" max="48" step="1" />
+  </div>
+
+  <p class="hint">
+    提示：請先在 YouTube 播放器右下角開啟「字幕 (CC)」，
+    本插件才會把字幕翻譯顯示出來。
+  </p>
+
+  <footer class="ft">設定會自動儲存並即時套用</footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

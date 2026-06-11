@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube 即時翻譯字幕",
+  "version": "1.0.0",
+  "description": "在 YouTube 觀看時，把各國語言字幕即時翻譯成你看得懂的語言（預設繁體中文）。",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://translate.googleapis.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://m.youtube.com/*"
+      ],
+      "js": ["src/content.js"],
+      "css": ["src/content.css"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "YouTube 即時翻譯字幕",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
