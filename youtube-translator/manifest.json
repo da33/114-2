@@ -5,7 +5,9 @@
   "description": "在 YouTube 觀看時，把各國語言字幕即時翻譯成你看得懂的語言（預設繁體中文）。",
   "permissions": ["storage"],
   "host_permissions": [
-    "https://translate.googleapis.com/*"
+    "https://translate.googleapis.com/*",
+    "https://lingva.ml/*",
+    "https://translate.plausibility.cloud/*"
   ],
   "background": {
     "service_worker": "src/background.js"

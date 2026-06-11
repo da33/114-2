@@ -10,7 +10,8 @@
 - 可選擇**同時顯示原文 + 譯文**，方便對照學語言
 - 可調整字級
 - 翻譯結果會快取，重複的字幕不會重複翻、反應更快
-- 免 API key、安裝即用（使用 Google 翻譯的公開端點）
+- **完全免費**：免 API key、免註冊、安裝即用（使用 Google 翻譯的公開端點）
+- 內建免費備援：Google 端點偶爾被限流時，自動改用 Lingva（開源免費的翻譯代理），全程不需付費
 
 ## 安裝（載入未封裝的擴充功能）
 
@@ -54,12 +55,15 @@ content.js  ──sendMessage──▶  background.js
 
 ## 已知限制與後續可擴充
 
-- 使用的是 Google 翻譯**非官方公開端點**，量大時可能被限流；要更穩定可改接：
-  - Google Cloud Translation API、DeepL API、或自架 LibreTranslate（需在 `background.js` 換掉 `googleTranslate()`）
+- 使用的都是**免費端點**（Google 公開端點 + Lingva 備援），不需要任何付費或 API key。
+  量極大時仍可能短暫被限流，但備援機制 + 快取已大幅降低發生機率
+- 想再加更多免費備援，可自架 [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)（開源免費）後加入 `background.js` 的備援清單
 - 自動字幕是逐字增長的，本插件以 ~350ms 去抖動後翻譯整行，已兼顧反應速度與翻譯次數
 - 若要做成可上架的版本，需補上更完整的圖示與商店素材
 
-## 開發者：替換翻譯後端
+## 開發者：替換或新增翻譯後端
 
-在 `src/background.js` 的 `googleTranslate(text, targetLang)` 換成你的服務即可，
-回傳格式維持 `{ translated, detected }`。其他程式碼不需更動。
+翻譯後端集中在 `src/background.js`：
+`translateWithFallback()` 會依序嘗試 `googleTranslate()` → 各個 Lingva 實例。
+要新增免費後端，寫一個回傳 `{ translated, detected }` 的函式並加進備援順序即可，
+其他程式碼不需更動。

@@ -1,6 +1,7 @@
 // Background service worker:
 // - Receives translation requests from content scripts
-// - Calls the Google Translate free endpoint (no API key required)
+// - Calls free, no-API-key translation endpoints with automatic fallback:
+//     1. translate.googleapis.com (gtx)  2. Lingva instances
 // - Caches results in-memory to avoid re-translating repeated caption lines
 
 const CACHE = new Map();          // key: `${tl}::${text}` -> translated string
@@ -44,7 +45,48 @@ async function googleTranslate(text, targetLang) {
     }
   }
   const detected = (Array.isArray(data) && data[2]) || "auto";
+  if (!translated) throw new Error("google empty result");
   return { translated, detected };
+}
+
+// Free fallback: Lingva (open-source Google Translate front-end).
+// API shape: GET /api/v1/{source}/{target}/{query} -> { translation }
+const LINGVA_INSTANCES = [
+  "https://lingva.ml",
+  "https://translate.plausibility.cloud",
+];
+
+async function lingvaTranslate(text, targetLang, base) {
+  // Lingva uses zh for Traditional Chinese and zh_HANS for Simplified
+  const tl = targetLang === "zh-TW" ? "zh" :
+             targetLang === "zh-CN" ? "zh_HANS" : targetLang;
+  const url = base + "/api/v1/auto/" + encodeURIComponent(tl) +
+              "/" + encodeURIComponent(text);
+  const res = await fetch(url, { method: "GET" });
+  if (!res.ok) throw new Error("lingva http " + res.status);
+  const data = await res.json();
+  if (!data || typeof data.translation !== "string" || !data.translation) {
+    throw new Error("lingva empty result");
+  }
+  return { translated: data.translation, detected: (data.info && data.info.detectedSource) || "auto" };
+}
+
+// Tries each free provider in order until one succeeds.
+async function translateWithFallback(text, targetLang) {
+  let lastErr;
+  try {
+    return await googleTranslate(text, targetLang);
+  } catch (err) {
+    lastErr = err;
+  }
+  for (const base of LINGVA_INSTANCES) {
+    try {
+      return await lingvaTranslate(text, targetLang, base);
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr;
 }
 
 async function handleTranslate(payload, sendResponse) {
@@ -63,7 +105,7 @@ async function handleTranslate(payload, sendResponse) {
   }
 
   try {
-    const { translated, detected } = await googleTranslate(text, targetLang);
+    const { translated, detected } = await translateWithFallback(text, targetLang);
     rememberInCache(key, translated);
     sendResponse({ ok: true, translated, detected, cached: false });
   } catch (err) {
