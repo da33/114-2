@@ -10,7 +10,8 @@
     targetLang: "zh-TW",
     showOriginal: true,
     fontSize: 24,
-    debounceMs: 350,
+    debounceMs: 180,         // wait after the caption stops changing
+    maxWaitMs: 550,          // but never wait longer than this before translating
     hideNative: true,        // hide YouTube's own captions to avoid overlap
     engine: "google",        // "google" (free, no key) or "gemini" (free AI)
     geminiApiKey: "",
@@ -159,6 +160,8 @@
       // Captions cleared between lines — hide the overlay.
       if (overlay) overlay.style.opacity = "0";
       lastSentText = "";
+      pendingSince = 0;
+      clearTimeout(debounceTimer);
       return;
     }
     if (text === lastSentText) return;
@@ -173,8 +176,22 @@
       }
     }
 
+    scheduleTranslation(text);
+  }
+
+  // Debounce so we don't translate every keystroke of a growing auto-caption,
+  // but cap the total wait so a continuously-changing line still gets
+  // translated promptly instead of waiting for the speaker to pause.
+  let pendingSince = 0;
+  function scheduleTranslation(text) {
+    if (!pendingSince) pendingSince = Date.now();
+    const waited = Date.now() - pendingSince;
+    const delay = Math.max(0, Math.min(settings.debounceMs, settings.maxWaitMs - waited));
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => requestTranslation(text), settings.debounceMs);
+    debounceTimer = setTimeout(() => {
+      pendingSince = 0;
+      requestTranslation(text);
+    }, delay);
   }
 
   // ---- Observe the caption container --------------------------------------
