@@ -250,6 +250,33 @@
   let lastSegIdx = -1;
   let setupToken = 0;          // invalidates stale async setups on navigation
 
+  // Build the playback timeline from raw timed segments and start translating.
+  function buildTimeline(rawSegs, myToken, sourceLabel) {
+    if (myToken !== setupToken) return;
+    if (!settings.enabled) return;
+    if (!rawSegs || !rawSegs.length) return;
+    if (timelineActive && timeline.length) return; // already have one
+    timeline = rawSegs.map((s) => ({
+      start: s.start,
+      end: s.end != null ? s.end : s.start,
+      text: s.text,
+      translated: "",
+    }));
+    timelineActive = true;
+    lastSegIdx = -1;
+    attachTimeUpdate();
+    onTimeUpdate();                              // show original immediately
+    LOG("prefetch ACTIVE ✓ (" + sourceLabel + ") —", timeline.length, "lines via", settings.engine);
+    translateTimeline(myToken);
+  }
+
+  // The MAIN-world script captures the caption data the player itself loads
+  // (correctly timed and authorized) and forwards it here.
+  window.addEventListener("message", (ev) => {
+    if (ev.source !== window || !ev.data || ev.data.__ytrt !== "transcript") return;
+    buildTimeline(ev.data.segs, setupToken, "captured");
+  });
+
   // Ask the MAIN-world inject script for the caption track list.
   function requestTracks(timeoutMs = 3000) {
     return new Promise((resolve) => {
@@ -421,29 +448,30 @@
       }
       const track = pickTrack(info.tracks, settings.targetLang);
       LOG("prefetch: chosen source track =", track && track.languageCode, track && track.kind);
-      if (!track || !track.baseUrl) {
-        LOG("prefetch FAILED: no usable track baseUrl -> live mode");
-        return;
-      }
 
-      LOG("prefetch: fetching transcript...");
-      const segs = await fetchTranscript(track.baseUrl);
-      if (myToken !== setupToken) return;
-      LOG("prefetch: transcript has", segs.length, "lines");
-      if (!segs.length) {
-        LOG("prefetch FAILED: transcript empty -> live mode");
-        return;
-      }
+      // Trigger the player to load a caption track; the MAIN-world hook will
+      // capture the response and call buildTimeline(). This is the reliable path.
+      LOG("prefetch: asking player to load captions (will capture)...");
+      window.postMessage({ __ytrt: "req-enable", targetLang: settings.targetLang }, "*");
 
-      timeline = segs;
-      timelineActive = true;
-      lastSegIdx = -1;
-      attachTimeUpdate();
-      onTimeUpdate();                             // show original immediately
-      LOG("prefetch ACTIVE ✓ — zero-latency mode, translating", segs.length, "lines via", settings.engine);
-      translateTimeline(myToken);                 // fill translations async
+      // Also try fetching the track URL directly as a fast path. This often
+      // returns empty on current YouTube (needs a session token), in which case
+      // the capture path above takes over — so failure here is non-fatal.
+      if (track && track.baseUrl) {
+        try {
+          const segs = await fetchTranscript(track.baseUrl);
+          if (myToken !== setupToken) return;
+          if (segs.length) {
+            LOG("prefetch: direct fetch got", segs.length, "lines");
+            buildTimeline(segs, myToken, "direct");
+          } else {
+            LOG("prefetch: direct fetch empty — waiting for capture path");
+          }
+        } catch (e) {
+          LOG("prefetch: direct fetch failed (" + (e && e.message) + ") — waiting for capture path");
+        }
+      }
     } catch (e) {
-      // Any failure: leave timelineActive false so the live observer takes over.
       LOG("prefetch ERROR -> live mode:", e && e.message ? e.message : e);
       teardownTimeline();
     }
